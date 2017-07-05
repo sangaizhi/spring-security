@@ -11,6 +11,6 @@
     <title>失败</title>
 </head>
 <body>
-  登录失败后的跳转页面
+  登录<span style="color:#e00;"> 失败</span>后的跳转页面
 </body>
 </html>

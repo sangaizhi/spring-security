@@ -18,6 +18,6 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
 	public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 		Authentication authentication) throws IOException, ServletException {
-		httpServletResponse.sendRedirect("loginSuccess.jsp");
+		httpServletResponse.sendRedirect("loginSuccess");
 	}
 }

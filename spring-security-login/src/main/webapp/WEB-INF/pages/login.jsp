@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head lang="zh-CN">
     <meta charset="UTF-8">
@@ -6,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 </head>
 <body>
+<span>${logout}</span>
 <form action="login.action" method="post">
     <table>
         <tr>

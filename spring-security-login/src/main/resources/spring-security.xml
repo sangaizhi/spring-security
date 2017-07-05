@@ -18,10 +18,10 @@
             always-use-default-target: 指定不管是不是直接请求登录页面，登录之后都跳转到页面。
             authentication-failure-url: 指定登录失败的跳转页面。注意：和登录页面一样，不能受限制。
      -->
-    <security:http security="none" pattern="/login.jsp"/>
-    <security:http security="none" pattern="/loginFailure.jsp"/>
+    <security:http security="none" pattern="/loginPage"/>
+    <security:http security="none" pattern="/WEB-INF/page/loginFailure.jsp"/>
     <security:http auto-config="true">
-        <security:form-login login-page="/login.jsp" login-processing-url="/login.action" username-parameter="username"
+        <security:form-login login-page="/loginPage" login-processing-url="/login.action" username-parameter="username"
                              password-parameter="password"
                              authentication-success-handler-ref="authenticationSuccessHandler"
                              authentication-failure-handler-ref="authenticationFailureHandler"/>
