@@ -14,20 +14,22 @@
             username-parameter: 登录时用户名使用的参数，默认是 "j_username"
             password-parameter: 登录是密码使用的参数，默认是 "j_password"
             login-processing-url: 登录时的提交地址，默认是 "/j-spring-security-check"。
-
+            default-target-url: 登录成功后的跳转页面（直接请求登录页面的情况下，不是直接请求的情况下，则跳转到原本受限制的页面）
+            always-use-default-target: 指定不管是不是直接请求登录页面，登录之后都跳转到页面。
 
      -->
     <security:http security="none" pattern="/login.jsp"/>
     <security:http auto-config="true">
         <security:form-login login-page="/login.jsp" login-processing-url="/login.action" username-parameter="username"
-                             password-parameter="password" />
+                             password-parameter="password" authentication-success-handler-ref="authenticationSuccessHandler" />
         <!-- 表示不需要认证就可以访问的页面
         <security:intercept-url pattern="/login.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
          -->
         <security:intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
         <security:csrf disabled="true"/>
     </security:http>
-
+    <!-- 认证成功后的处理类 -->
+    <bean id="authenticationSuccessHandler" class="org.sangaizhi.security.Authentication.AuthenticationSuccessHandlerImpl"/>
 
 
 
