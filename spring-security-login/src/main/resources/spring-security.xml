@@ -1,0 +1,55 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security-4.1.xsd">
+
+    <!--
+        自定义登录页面:通过 http 元素下的 form-login 元素来定义表单登录信息
+        登录页面需要通过 login-page 属性来指定
+        form-login 的属性：
+            login-page: 登录页面
+            username-parameter: 登录时用户名使用的参数，默认是 "j_username"
+            password-parameter: 登录是密码使用的参数，默认是 "j_password"
+            login-processing-url: 登录时的提交地址，默认是 "/j-spring-security-check"。
+
+
+     -->
+    <security:http security="none" pattern="/login.jsp"/>
+    <security:http auto-config="true">
+        <security:form-login login-page="/login.jsp" login-processing-url="/login.action" username-parameter="username"
+                             password-parameter="password" />
+        <!-- 表示不需要认证就可以访问的页面
+        <security:intercept-url pattern="/login.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+         -->
+        <security:intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
+        <security:csrf disabled="true"/>
+    </security:http>
+
+
+
+
+    <!--
+        定义一个认证管理器
+        authentication-manager 元素指定了一个 AuthenticationManager，其需要一个 AuthenticationProvider 来进行
+        真正的认证。默认情况下，authentication-provider 对应一个 DaoAuthenticationProvider,其需要 userDetailsService
+        (对应 user-service)来获取用户信息 UserDetails(对应 user 元素).
+        此处暂时使用 user 元素来定义用户信息（实际项目中通常都是从数据库中获取的）：包括用户名、密码、拥有的权限。
+        当然security 还支持从 properties 文件中指定用户信息。
+    -->
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="user" password="user" authorities="ROLE_USER"/>
+                <security:user name="admin" password="admin" authorities="ROLE_USER,ROLE_ADMIN"/>
+            </security:user-service>
+            <!-- 从 properties 文件中指定用户信息 -->
+            <!--
+            <security:user-service properties="classpath:user.properties"/>
+            -->
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+</beans>
