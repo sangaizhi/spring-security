@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * 认证成功后的请求处理
+ * 
  * @author sangaizhi
  * @date 2017/7/5
  */
@@ -16,6 +18,6 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
 	public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 		Authentication authentication) throws IOException, ServletException {
-	    httpServletResponse.sendRedirect("loginSuccess.jsp");
+		httpServletResponse.sendRedirect("loginSuccess.jsp");
 	}
 }
