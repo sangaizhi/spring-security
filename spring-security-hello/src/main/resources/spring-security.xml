@@ -1,0 +1,43 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security-4.1.xsd">
+
+    <!--
+        定义 web 相关权限控制
+        intercept-url 定义权限控制的规则
+        patter: 表示将对那些 URL 进行权限控制，也可是已一个正则表达式；此处表示对所有的 URL 进行权限控制
+        access: 表示在请求对应的 URL 时需要什么权限，默认配置时它应该是一个以逗号等额的角色列表，请求的
+                用户只需要拥有其中的一个角色就能成功访问对应的URL。这里的“ROLE_USER”表示当前的用户应当
+                具有 USER 角色，“ROLE”前缀是一个提示 Spring 使用基于角色的检查的标记
+     -->
+    <security:http auto-config="true">
+        <security:intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
+    </security:http>
+
+
+    <!--
+        定义一个认证管理器
+        authentication-manager 元素指定了一个 AuthenticationManager，其需要一个 AuthenticationProvider 来进行
+        真正的认证。默认情况下，authentication-provider 对应一个 DaoAuthenticationProvider,其需要 userDetailsService
+        (对应 user-service)来获取用户信息 UserDetails(对应 user 元素).
+        此处暂时使用 user 元素来定义用户信息（实际项目中通常都是从数据库中获取的）：包括用户名、密码、拥有的权限。
+        当然security 还支持从 properties 文件中指定用户信息。
+    -->
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="user" password="user" authorities="ROLE_USER"/>
+                <security:user name="admin" password="admin" authorities="ROLE_USER,ROLE_ADMIN"/>
+            </security:user-service>
+            <!-- 从 properties 文件中指定用户信息 -->
+            <!--
+            <security:user-service properties="classpath:user.properties"/>
+            -->
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+</beans>
