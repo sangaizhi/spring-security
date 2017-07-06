@@ -9,12 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spring-security-login</artifactId>
-    <packaging>war</packaging>
-
+    <artifactId>spring-security-login-annotation</artifactId>
     <properties>
         <package.environment></package.environment>
     </properties>
+    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
@@ -22,7 +21,7 @@
             <artifactId>spring-security-base</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+        <!-- servlet 相关-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
@@ -33,15 +32,16 @@
             <artifactId>jsp-api</artifactId>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
+            <version>${jstl.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>
-        <finalName>spring-security-login</finalName>
+        <finalName>spring-security-login-annotation</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -56,7 +56,7 @@
                 <version>2.2</version>
                 <configuration>
                     <port>8080</port>
-                    <path>/scl</path>
+                    <path>/scla</path>
                     <uriEncoding>UTF-8</uriEncoding>
                     <finalName>scl</finalName>
                     <server>tomcat7</server>
@@ -72,7 +72,7 @@
                     <archive>
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive>
-                    <warName>spring-security-login</warName>
+                    <warName>spring-security-login-annotation</warName>
                     <webResources>
                         <resource>
                             <directory>src/main/resources/${package.environment}</directory>
@@ -84,4 +84,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
