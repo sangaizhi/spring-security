@@ -9,8 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spring-security-taglib</artifactId>
-
+    <artifactId>spring-security-role-base-login</artifactId>
     <properties>
         <package.environment></package.environment>
     </properties>
@@ -61,7 +60,7 @@
                 <version>2.2</version>
                 <configuration>
                     <port>8080</port>
-                    <path>/sct</path>
+                    <path>/scrbl</path>
                     <uriEncoding>UTF-8</uriEncoding>
                     <finalName>scl</finalName>
                     <server>tomcat7</server>
