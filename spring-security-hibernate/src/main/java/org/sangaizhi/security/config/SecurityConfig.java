@@ -1,0 +1,50 @@
+package org.sangaizhi.security.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+/**
+ * @author sangaizhi
+ * @date 2017/7/10
+ */
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+
+    @Autowired
+    @Qualifier("customUserDetailsService")
+    private UserDetailsService userDetailsService;
+
+    /**
+     * 全局安全认证管理
+     * @param managerBuilder
+     * @throws Exception
+     */
+    public void configureGlobalSecurity(AuthenticationManagerBuilder managerBuilder) throws Exception {
+        managerBuilder.userDetailsService(userDetailsService);
+    }
+
+    /**
+     * 配置登录页、凭证参数、密码参数和登出请求，并且禁用了 csrf
+     * @param http
+     * @throws Exception
+     */
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeRequests().antMatchers("/").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .and().formLogin().loginPage("/loginPage").failureUrl("/loginPage?error").successForwardUrl("/").loginProcessingUrl("/login")
+                .usernameParameter("username").passwordParameter("password")
+                .and().logout().logoutSuccessUrl("/loginPage?logout");
+    }
+
+
+}
