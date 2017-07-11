@@ -1,5 +1,6 @@
 package org.sangaizhi.security.config;
 
+import org.sangaizhi.security.handler.CustomSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("customUserDetailsService")
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private CustomSuccessHandler customSuccessHandler;
+
     /**
      * 全局安全认证管理
      * @param managerBuilder
@@ -41,9 +45,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests().antMatchers("/").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-                .and().formLogin().loginPage("/loginPage").failureUrl("/loginPage?error").successForwardUrl("/").loginProcessingUrl("/login")
+                .antMatchers("/dba/**").access("hasRole('ROLE_DBA')")
+                .and().formLogin().loginPage("/loginPage").failureUrl("/loginPage?error").successHandler(customSuccessHandler).loginProcessingUrl("/login")
                 .usernameParameter("username").passwordParameter("password")
-                .and().logout().logoutSuccessUrl("/loginPage?logout");
+                .and().logout().logoutSuccessUrl("/loginPage?logout")
+                .and().exceptionHandling().accessDeniedPage("/Access_Denied");
     }
 
 
