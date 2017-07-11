@@ -23,4 +23,8 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
         criteria.add(Restrictions.eq("username", username));
         return (User) criteria.uniqueResult();
     }
+
+    public void save(User user) {
+        persist(user);
+    }
 }

@@ -10,4 +10,6 @@ public interface UserDao {
     User findById(Long id);
 
     User findByUsername(String username);
+
+    void save(User user);
 }

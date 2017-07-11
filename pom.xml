@@ -15,6 +15,7 @@
         <module>spring-security-taglib</module>
         <module>spring-security-role-base-login</module>
         <module>spring-security-hibernate</module>
+        <module>spring-security-encrypt</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
